@@ -2,6 +2,7 @@ lim = 2000000
 prime = []
 map = [1, 0] * int(lim / 2)
 p = 3
+
 while True:
     if not map[p]:
         is_prime = all([p % x != 0 for x in prime])
@@ -13,6 +14,8 @@ while True:
     if p > lim:
         break
 acc = 2
+
 for p in prime:
     acc += p
+
 print(acc)
