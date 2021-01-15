@@ -50,17 +50,21 @@ bool Miller(cpp_int p, int reps) {
   if (p < 2) {
     return false;
   }
-  if (p != 2 && p % 2==0) {
+  if (p != 2 && p % 2 == 0) {
     return false;
   }
   cpp_int s = p - 1;
+  cout << "Calculating S...\n";
   while (s % 2 == 0) {
     s /= 2;
   }
   for (int i=0; i<reps; i++) {
+    cout << "REP: " << i+1 << "\n";
     cpp_int a = rand() % (p - 1) + 1;
     cpp_int temp = s;
+    cout << "modulo\n";
     cpp_int mod = modulo(a, temp, p);
+    cout << "mulmod\n";
     while (temp != p-1 && mod != 1 && mod != p-1) {
       mod = mulmod(mod, mod, p);
       temp *= 2;
@@ -115,18 +119,21 @@ int main() {
   uint64_t time_start = time_now();
 
   // sieve 10K primes ~ 0.27s
-  std::vector<int> primes = ESieve(10000);
+  // std::vector<int> primes = ESieve(10000);
 
   // candidate numbers
-  int exponent = 8;
+  int exponent = 332192812; // 8;
+  int max_exponents = 100; // exponent;
   std::vector<int> exponents;
   std::vector<cpp_int> candidates;
   std::vector<cpp_int> results;
-  for (int i=1; i<exponent; i++) {
+  cout << "Generating candidates...\n";
+  for (int i=1; i<max_exponents; i++) {
     cpp_int num = generate_number(exponent, i);
     exponents.push_back(i);
     candidates.push_back(num);
   }
+  cout << "Done.\n";
 
   // check results
   int reps = 10;
@@ -134,20 +141,23 @@ int main() {
     bool res = Miller(candidates[i], reps);
     bool found = false;
     if (res) {
-      results.push_back(exponents[i]);
-      results.push_back(candidates[i]);
+      //results.push_back(exponents[i]);
+      //results.push_back(candidates[i]);
       // found = contains(candidates[i], primes);
     }
-    std::cout << "2^" << exponent << " - 2^" << exponents[i] << " - 1 = " << candidates[i];
-    std::cout << " Miller: " << res << ", Sieve: " << found << "\n";
+    std::cout << "2^" << exponent << " - 2^" << exponents[i] << " - 1 = ";// << candidates[i];
+    std::cout << " Miller: " << res;//<< ", Sieve: " << found;
+    std::cout << "\n";
   }
 
   // print
+  /*
   std::cout << "\nRESULTS\n";
   for (int i=0; i<results.size(); i+=2) {
     std::cout << "2^" << exponent << " - 2^" << results[i] << " - 1 = " << results[i+1] << "\n";
   }
   std::cout << "\n";
+  */
 
   // log time
   cout << (time_now() - time_start)/1000.0 << "\n";
