@@ -2,25 +2,24 @@
 
 import math
 
-prev = 0
-i = 0
-res = 0
-max = 0
+number = 0
+previous_number = 0
+natural = 0
 
 while True:
-    next = prev + i
-    lim = math.ceil(math.sqrt(next)) + 1
-    n = 2
-    for x in range(2, lim):
-        if next % x == 0:
-            n += 2
-    prev = next
-    i += 1
-    if n > max:
-        max = n
-        print(next, ':', n)
-    if n > 500:
-        res = next
-        break
+    # get next in sequence
+    previous_number = number
+    natural += 1
+    number = previous_number + natural
 
-print(res)
+    # count divisors
+    divisors = 2
+    lim = math.ceil(math.sqrt(number)) + 1
+    for x in range(2, lim):
+        if number % x == 0:
+            divisors += 2
+
+    # check done
+    if divisors > 500:
+        print('number:', number, 'divisors:', divisors)
+        break

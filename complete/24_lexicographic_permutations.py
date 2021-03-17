@@ -1,6 +1,5 @@
 # P24 Lexicographic Permutations
 
-import itertools
 import math
 
 # get nth permutation
@@ -20,7 +19,8 @@ res = get_permutation([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 1000000)
 print(''.join(str(i) for i in res))
 
 # permutation analysis
-
+# import itertools
+'''
 def num_permutations(list):
     return math.factorial(len(list))
 
@@ -50,3 +50,4 @@ def analyse(list):
         next = n - first
         print(next, next - prev, next / 9)
         prev = next
+'''

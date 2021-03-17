@@ -1,7 +1,6 @@
 /** Rabin Miller primality test */
 
 #define BOOST_MP_DISABLE_DEPRECATE_03_WARNING
-#define LLong long long
 
 #include <vector>
 #include <stdio.h>
@@ -15,6 +14,16 @@ using namespace boost::multiprecision;
 uint64_t time_now() {
   using namespace std::chrono;
   return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+}
+
+// get number of digits
+int count_digits(cpp_int n) {
+  int size = 0;
+  while (n > 0) {
+    size++;
+    n /= 10;
+  }
+  return size;
 }
 
 // multiplication with mod
@@ -47,10 +56,7 @@ cpp_int modulo(cpp_int base, cpp_int e, cpp_int m) {
 
 // Rabin-Miller test
 bool Miller(cpp_int p, int reps) {
-  if (p < 2) {
-    return false;
-  }
-  if (p != 2 && p % 2 == 0) {
+  if (p < 2 || (p != 2 && p % 2 == 0)) {
     return false;
   }
   cpp_int s = p - 1;
@@ -134,6 +140,10 @@ int main() {
     candidates.push_back(num);
   }
   cout << "Done.\n";
+
+  // digits
+  cout << "Counting digits...\n";
+  cout << count_digits(candidates[0]);
 
   // check results
   int reps = 10;
